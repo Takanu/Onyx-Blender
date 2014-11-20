@@ -18,7 +18,6 @@
 
 
 #//////////////////////////////// - AUTHORS YO - ///////////////////////////
-#Designer and Devel
 
 bl_info = {
     "name": "Black Hole",
