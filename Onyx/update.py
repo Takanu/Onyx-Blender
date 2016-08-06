@@ -4,22 +4,22 @@ from .object_lib import ActivateObject, FocusObject, SelectObject, RecordSelecte
 #//////////////////////////////// - UPDATES - ///////////////////////////
 def Update_ObjectOrigin(self, context):
 
-    if context.scene.BHScn.update_toggle is False:
+    if context.scene.OXScn.update_toggle is False:
         print("Updating origins..")
-        context.scene.BHScn.update_toggle = True
-        originType = context.active_object.BHObj.origin_point
+        context.scene.OXScn.update_toggle = True
+        originType = context.active_object.OXObj.origin_point
         SetMeshOrigin(int(originType), "")
-        context.scene.BHScn.update_toggle = False
+        context.scene.OXScn.update_toggle = False
 
     return None
 
 def Update_ObjectVGOrigin(self, context):
 
     # Get the origin point and call the respective def
-    context.scene.BHScn.update_toggle = True
-    originType = context.active_object.BHObj.origin_point
+    context.scene.OXScn.update_toggle = True
+    originType = context.active_object.OXObj.origin_point
     SetMeshOrigin(int(originType), "")
-    context.scene.BHScn.update_toggle = False
+    context.scene.OXScn.update_toggle = False
 
     return None
 

@@ -4,7 +4,7 @@ from bpy.types import Operator
 from .object_lib import ActivateObject, FocusObject, SelectObject, RecordSelectedState, RestoreSelectedState
 
 
-class BH_Origin_MeshBase(Operator):
+class OX_Origin_MeshBase(Operator):
     """Sets the origin to the base of the mesh in a local orientation."""
 
     bl_idname = "origin.mesh_base"
@@ -87,13 +87,13 @@ class BH_Origin_MeshBase(Operator):
             bpy.data.scenes[bpy.context.scene.name].cursor_location = previous_cursor_loc
 
             # Set the object point type
-            item.BHObj.origin_point = '1'
+            item.OXObj.origin_point = '1'
 
         RestoreSelectedState(selRecord)
         return {'FINISHED'}
 
 
-class BH_Origin_MeshLowest(Operator):
+class OX_Origin_MeshLowest(Operator):
     """Sets the origin to the lowest point of the mesh in a global orientation."""
 
     bl_idname = "origin.mesh_lowest"
@@ -178,12 +178,12 @@ class BH_Origin_MeshLowest(Operator):
             bpy.data.scenes[bpy.context.scene.name].cursor_location = previous_cursor_loc
 
             # Set the object point type
-            item.BHObj.origin_point = '2'
+            item.OXObj.origin_point = '2'
 
         RestoreSelectedState(selRecord)
         return {'FINISHED'}
 
-class BH_Origin_MeshCOM(Operator):
+class OX_Origin_MeshCOM(Operator):
     """Sets the origin to the lowest point of the mesh in a global orientation."""
 
     bl_idname = "origin.mesh_centerofmass"
@@ -206,14 +206,14 @@ class BH_Origin_MeshCOM(Operator):
 
             FocusObject(item)
             bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY')
-            item.BHObj.origin_point = '3'
+            item.OXObj.origin_point = '3'
 
         RestoreSelectedState(selRecord)
 
         return {'FINISHED'}
 
 
-class BH_OriginVertexGroup(Operator):
+class OX_OriginVertexGroup(Operator):
     """Sets the origin to the selected vertex group."""
 
     bl_idname = "origin.mesh_vgroup"
@@ -243,7 +243,7 @@ class BH_OriginVertexGroup(Operator):
         context.tool_settings.mesh_select_mode = [True, False, False]
         bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
 
-        index = int(active.BHObj.vertex_groups) - 1
+        index = int(active.OXObj.vertex_groups) - 1
         if self.index != -1:
             index = self.index
 
@@ -276,12 +276,12 @@ class BH_OriginVertexGroup(Operator):
 
         # Restore the original cursor location
         bpy.data.scenes[bpy.context.scene.name].cursor_location = previous_cursor_loc
-        active.BHObj.origin_point = '4'
+        active.OXObj.origin_point = '4'
         RestoreSelectedState(selRecord)
 
         return {'FINISHED'}
 
-class BH_OriginCursor(Operator):
+class OX_OriginCursor(Operator):
     """Sets the origin to the selected vertex group."""
 
     bl_idname = "origin.mesh_cursor"
@@ -305,7 +305,7 @@ class BH_OriginCursor(Operator):
 
             FocusObject(item)
             bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
-            item.BHObj.origin_point = '5'
+            item.OXObj.origin_point = '5'
 
         RestoreSelectedState(selRecord)
 

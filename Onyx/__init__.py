@@ -20,12 +20,12 @@
 #//////////////////////////////// - AUTHORS YO - ///////////////////////////
 
 bl_info = {
-    "name": "Black Hole",
+    "name": "Onyx",
     "author": "Takanu Kyriako",
     "version": (3, 0),
     "blender": (2, 7, 3),
     "api": 39347,
-    "location": "3D View > Object Mode > Tools > Black Hole",
+    "location": "3D View > Object Mode > Tools > Onyx",
     "description": "Advanced origin tools and shortcuts",
     "wiki_url": "",
     "category": "Object"
@@ -83,9 +83,8 @@ addon_keymaps = []
 
 def register():
     bpy.utils.register_module(__name__)
-    bpy.types.Object.BHObj = PointerProperty(type=properties.BH_Object)
-    bpy.types.Scene.BHScn = PointerProperty(type=properties.BH_Scene)
-    bpy.context.scene.BHScn.update_toggle = False
+    bpy.types.Object.OXObj = PointerProperty(type=properties.OX_Object)
+    bpy.types.Scene.OXScn = PointerProperty(type=properties.OX_Scene)
 
     wm = bpy.context.window_manager
 
@@ -106,8 +105,8 @@ def register():
 
 def unregister():
     bpy.utils.unregister_module(__name__)
-    del bpy.types.Object.BHObj
-    del bpy.types.Scene.BHScn
+    del bpy.types.Object.OXObj
+    del bpy.types.Scene.OXScn
 
     wm = bpy.context.window_manager
     kc = wm.keyconfigs.addon

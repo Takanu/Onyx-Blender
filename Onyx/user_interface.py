@@ -1,11 +1,11 @@
 import bpy
 from bpy.types import Panel
 
-class BH_Interface(Panel):
+class OX_Interface(Panel):
     bl_space_type = "VIEW_3D"
     bl_region_type = "TOOLS"
     bl_context = "objectmode"
-    bl_label = "Black Hole"
+    bl_label = "Onyx"
     bl_category = "Tools"
 
     @classmethod
@@ -18,7 +18,7 @@ class BH_Interface(Panel):
     def draw(self, context):
         layout = self.layout
 
-        obj = context.object.BHObj
+        obj = context.object.OXObj
 
         # Core user interface for the plugin
 

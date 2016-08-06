@@ -19,7 +19,7 @@ def GetVertexGroups(scene, context):
     return items
 
 # All properties relating to a specific object
-class BH_Object(PropertyGroup):
+class OX_Object(PropertyGroup):
 
     origin_point = EnumProperty(
         name="Set Object Origin",
@@ -45,7 +45,7 @@ class BH_Object(PropertyGroup):
         update=Update_ObjectVGOrigin
         )
 
-class BH_Scene(PropertyGroup):
+class OX_Scene(PropertyGroup):
 
     update_toggle = BoolProperty(
         name = "Internal Update Toggle",
