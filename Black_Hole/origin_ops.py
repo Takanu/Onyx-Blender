@@ -19,11 +19,6 @@ class BH_Origin_MeshBase(Operator):
         for item in context.selected_objects:
 
             FocusObject(item)
-            mode = ''
-            mode = item.mode
-            bpy.ops.object.mode_set(mode='OBJECT')
-
-            # Enter the object!
             object_data = bpy.context.object.data
             bpy.ops.object.editmode_toggle()
             bpy.ops.mesh.select_all(action="DESELECT")
@@ -85,8 +80,6 @@ class BH_Origin_MeshBase(Operator):
             # Set the object point type
             item.BHObj.origin_point = '1'
 
-            bpy.ops.object.mode_set(mode=mode)
-
         RestoreSelectedState(selRecord)
         return {'FINISHED'}
 
@@ -105,10 +98,6 @@ class BH_Origin_MeshLowest(Operator):
         for item in context.selected_objects:
 
             FocusObject(item)
-            mode = ''
-            mode = item.mode
-            bpy.ops.object.mode_set(mode='OBJECT')
-
             object_data = bpy.context.object.data
             bpy.ops.object.editmode_toggle()
             bpy.ops.mesh.select_all(action="DESELECT")
@@ -174,7 +163,6 @@ class BH_Origin_MeshLowest(Operator):
 
             # Set the object point type
             item.BHObj.origin_point = '2'
-            bpy.ops.object.mode_set(mode=mode)
 
         RestoreSelectedState(selRecord)
         return {'FINISHED'}
@@ -194,13 +182,8 @@ class BH_Origin_MeshCOM(Operator):
         for item in context.selected_objects:
 
             FocusObject(item)
-            mode = ''
-            mode = item.mode
-            bpy.ops.object.mode_set(mode='OBJECT')
-
             bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY')
             item.BHObj.origin_point = '3'
-            bpy.ops.object.mode_set(mode=mode)
 
         RestoreSelectedState(selRecord)
 
@@ -221,10 +204,6 @@ class BH_OriginVertexGroup(Operator):
         for item in context.selected_objects:
 
             FocusObject(item)
-            mode = ''
-            mode = item.mode
-            bpy.ops.object.mode_set(mode='OBJECT')
-
             object_data = bpy.context.object.data
             bpy.ops.object.editmode_toggle()
             bpy.ops.mesh.select_all(action="DESELECT")
@@ -271,7 +250,6 @@ class BH_OriginVertexGroup(Operator):
 
             # Set the object point type
             item.BHObj.origin_point = '4'
-            bpy.ops.object.mode_set(mode=mode)
 
         RestoreSelectedState(selRecord)
         return {'FINISHED'}
@@ -283,18 +261,16 @@ class BH_OriginCursor(Operator):
     bl_label = ""
 
     def execute(self, context):
+        selRecord = RecordSelectedState(context)
 
         # Set the origin
         sel = context.selected_objects
         for item in context.selected_objects:
 
             FocusObject(item)
-            mode = ''
-            mode = item.mode
-            bpy.ops.object.mode_set(mode='OBJECT')
-
             bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
             item.BHObj.origin_point = '3'
-            bpy.ops.object.mode_set(mode=mode)
+
+        RestoreSelectedState(selRecord)
 
         return {'FINISHED'}

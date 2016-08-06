@@ -88,8 +88,15 @@ def register():
     wm = bpy.context.window_manager
 
     if wm.keyconfigs.addon:
-        # Views numpad
-        km = wm.keyconfigs.addon.keymaps.new(name='3D View Generic', space_type='VIEW_3D')
+        # Object Mode
+        km = wm.keyconfigs.addon.keymaps.new(name='Object Mode')
+        kmi = km.keymap_items.new('wm.call_menu_pie', 'C', 'PRESS', alt=True, shift=True)
+        kmi.properties.name = "pie.originextra"
+#        kmi.active = True
+        addon_keymaps.append(kmi)
+
+        # Edit Mode
+        km = wm.keyconfigs.addon.keymaps.new(name='Mesh')
         kmi = km.keymap_items.new('wm.call_menu_pie', 'C', 'PRESS', alt=True, shift=True)
         kmi.properties.name = "pie.originextra"
 #        kmi.active = True
@@ -103,6 +110,14 @@ def unregister():
     kc = wm.keyconfigs.addon
     if kc:
         km = kc.keymaps['3D View Generic']
+        for kmi in km.keymap_items:
+            if kmi.idname == 'wm.call_menu_pie':
+                if kmi.properties.name == "pie.originextra":
+                    km.keymap_items.remove(kmi)
+
+    kc = wm.keyconfigs.addon
+    if kc:
+        km = kc.keymaps['Mesh']
         for kmi in km.keymap_items:
             if kmi.idname == 'wm.call_menu_pie':
                 if kmi.properties.name == "pie.originextra":
