@@ -18,7 +18,9 @@ class OX_Origin_MeshBase(Operator):
         sel = []
 
         if self.target == "":
-            sel = context.selected_objects
+            for item in context.selected_objects:
+                if item.type == "MESH":
+                    sel.append(item)
         else:
             bpy.ops.object.select_pattern(pattern=self.target)
             sel.append(context.active_object)
@@ -106,7 +108,9 @@ class OX_Origin_MeshLowest(Operator):
         sel = []
 
         if self.target == "":
-            sel = context.selected_objects
+            for item in context.selected_objects:
+                if item.type == "MESH":
+                    sel.append(item)
         else:
             bpy.ops.object.select_pattern(pattern=self.target)
             sel.append(context.active_object)
@@ -197,7 +201,9 @@ class OX_Origin_MeshCOM(Operator):
         sel = []
 
         if self.target == "":
-            sel = context.selected_objects
+            for item in context.selected_objects:
+                if item.type == "MESH":
+                    sel.append(item)
         else:
             bpy.ops.object.select_pattern(pattern=self.target)
             sel.append(context.active_object)
@@ -294,7 +300,9 @@ class OX_OriginCursor(Operator):
         sel = []
 
         if self.target == "":
-            sel = context.selected_objects
+            for item in context.selected_objects:
+                if item.type == "MESH":
+                    sel.append(item)
         else:
             bpy.ops.object.select_pattern(pattern=self.target)
             sel.append(context.active_object)
