@@ -1,4 +1,4 @@
-Black-Hole
+Onyx
 ==========
 
 Provides a bunch of useful origin tools for placing origins in custom locations, as well as automating the process of repositioning object origins.
