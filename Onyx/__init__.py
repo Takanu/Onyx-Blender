@@ -26,7 +26,7 @@ bl_info = {
     "blender": (2, 7, 3),
     "api": 39347,
     "location": "3D View > Object Mode > Tools > Onyx",
-    "description": "Advanced origin tools and shortcuts",
+    "description": "Quick Multi-Object Origin Tools",
     "wiki_url": "",
     "category": "Object"
 }
@@ -77,7 +77,9 @@ class BlackHolePreferences(AddonPreferences):
         addon_prefs = user_preferences.addons[__name__].preferences
 
         row = layout.column(align=True)
-        row.label("TEST!")
+        row.label("Hey!  HEY!  OVER HERE!")
+        row.label("You can press Shift+Alt+C in Edit and Object Mode to access")
+        row.label("all of Onyx's tools.  Try it!")
 
 addon_keymaps = []
 
