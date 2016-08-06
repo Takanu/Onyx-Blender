@@ -10,12 +10,21 @@ class BH_Origin_MeshBase(Operator):
     bl_idname = "origin.mesh_base"
     bl_label = ""
 
+    target = StringProperty(default = "")
+
     def execute(self, context):
 
         selRecord = RecordSelectedState(context)
+        sel = []
+
+        if self.target == "":
+            sel = context.selected_objects
+        else:
+            bpy.ops.object.select_pattern(pattern=self.target)
+            sel.append(context.active_object)
 
         # Find all the selected objects in the scene
-        sel = context.selected_objects
+
         for item in context.selected_objects:
 
             FocusObject(item)
@@ -90,11 +99,18 @@ class BH_Origin_MeshLowest(Operator):
     bl_idname = "origin.mesh_lowest"
     bl_label = ""
 
+    target = StringProperty(default = "")
+
     def execute(self, context):
         selRecord = RecordSelectedState(context)
+        sel = []
 
-        # Find all the selected objects in the scene
-        sel = context.selected_objects
+        if self.target == "":
+            sel = context.selected_objects
+        else:
+            bpy.ops.object.select_pattern(pattern=self.target)
+            sel.append(context.active_object)
+
         for item in context.selected_objects:
 
             FocusObject(item)
@@ -173,12 +189,19 @@ class BH_Origin_MeshCOM(Operator):
     bl_idname = "origin.mesh_centerofmass"
     bl_label = ""
 
+    target = StringProperty(default = "")
+
     def execute(self, context):
 
         selRecord = RecordSelectedState(context)
+        sel = []
 
-        # Set the origin
-        sel = context.selected_objects
+        if self.target == "":
+            sel = context.selected_objects
+        else:
+            bpy.ops.object.select_pattern(pattern=self.target)
+            sel.append(context.active_object)
+
         for item in context.selected_objects:
 
             FocusObject(item)
@@ -196,62 +219,66 @@ class BH_OriginVertexGroup(Operator):
     bl_idname = "origin.mesh_vgroup"
     bl_label = ""
 
+    target = StringProperty(default = "")
+    index = IntProperty(default = -1)
+
     def execute(self, context):
         selRecord = RecordSelectedState(context)
+        active = context.active_object
 
-        # Find all the selected objects in the scene
-        sel = context.selected_objects
-        for item in context.selected_objects:
+        if self.target != "":
+            bpy.ops.object.select_all(action='DESELECT')
+            bpy.context.scene.objects.active = bpy.data.objects[self.target]
+            bpy.ops.object.select_pattern(pattern=self.target)
 
-            FocusObject(item)
-            object_data = bpy.context.object.data
-            bpy.ops.object.editmode_toggle()
-            bpy.ops.mesh.select_all(action="DESELECT")
-            bpy.ops.object.editmode_toggle()
+        FocusObject(active)
+        object_data = active.data
+        bpy.ops.object.editmode_toggle()
+        bpy.ops.mesh.select_all(action="DESELECT")
+        bpy.ops.object.editmode_toggle()
 
-            #Setup the correct tools to select vertices
-            bpy.ops.object.mode_set(mode='EDIT', toggle=False)
-            sel_mode = context.tool_settings.mesh_select_mode
-            context.tool_settings.mesh_select_mode = [True, False, False]
-            bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
+        #Setup the correct tools to select vertices
+        bpy.ops.object.mode_set(mode='EDIT', toggle=False)
+        sel_mode = context.tool_settings.mesh_select_mode
+        context.tool_settings.mesh_select_mode = [True, False, False]
+        bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
 
-            index = int(bpy.context.active_object.BHObj.vertex_groups) - 1
+        index = int(active.BHObj.vertex_groups) - 1
+        if self.index != -1:
+            index = self.index
 
-            #Search through all vertices in the object to find the ones belonging to the
-            #Selected vertex group
-            for vertex in object_data.vertices:
-                for group in vertex.groups:
-                    if group.group == index:
-                        vertex.select = True
-                        #print("Vertex Selected!")
+        #Search through all vertices in the object to find the ones belonging to the
+        #Selected vertex group
+        for vertex in object_data.vertices:
+            for group in vertex.groups:
+                if group.group == index:
+                    vertex.select = True
 
-            #Restore previous settings
-            bpy.ops.object.mode_set(mode='EDIT', toggle=False)
-            context.tool_settings.mesh_select_mode = sel_mode
-            bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
+        #Restore previous settings
+        bpy.ops.object.mode_set(mode='EDIT', toggle=False)
+        context.tool_settings.mesh_select_mode = sel_mode
+        bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
 
 
-            # Saves the current cursor location
-            cursor_loc = bpy.data.scenes[bpy.context.scene.name].cursor_location
-            previous_cursor_loc = [cursor_loc[0], cursor_loc[1], cursor_loc[2]]
+        # Saves the current cursor location
+        cursor_loc = bpy.data.scenes[bpy.context.scene.name].cursor_location
+        previous_cursor_loc = [cursor_loc[0], cursor_loc[1], cursor_loc[2]]
 
-            # Snap the cursor
-            bpy.ops.object.editmode_toggle()
-            bpy.ops.view3D.snap_cursor_to_selected()
-            bpy.ops.mesh.select_all(action="DESELECT")
-            bpy.ops.object.editmode_toggle()
+        # Snap the cursor
+        bpy.ops.object.editmode_toggle()
+        bpy.ops.view3D.snap_cursor_to_selected()
+        bpy.ops.mesh.select_all(action="DESELECT")
+        bpy.ops.object.editmode_toggle()
 
-            # Set the origin
-            FocusObject(item)
-            bpy.ops.object.origin_set(type ='ORIGIN_CURSOR')
+        # Set the origin
+        FocusObject(active)
+        bpy.ops.object.origin_set(type ='ORIGIN_CURSOR')
 
-            # Restore the original cursor location
-            bpy.data.scenes[bpy.context.scene.name].cursor_location = previous_cursor_loc
-
-            # Set the object point type
-            item.BHObj.origin_point = '4'
-
+        # Restore the original cursor location
+        bpy.data.scenes[bpy.context.scene.name].cursor_location = previous_cursor_loc
+        active.BHObj.origin_point = '4'
         RestoreSelectedState(selRecord)
+
         return {'FINISHED'}
 
 class BH_OriginCursor(Operator):
@@ -260,8 +287,17 @@ class BH_OriginCursor(Operator):
     bl_idname = "origin.mesh_cursor"
     bl_label = ""
 
+    target = StringProperty(default = "")
+
     def execute(self, context):
         selRecord = RecordSelectedState(context)
+        sel = []
+
+        if self.target == "":
+            sel = context.selected_objects
+        else:
+            bpy.ops.object.select_pattern(pattern=self.target)
+            sel.append(context.active_object)
 
         # Set the origin
         sel = context.selected_objects
@@ -269,7 +305,7 @@ class BH_OriginCursor(Operator):
 
             FocusObject(item)
             bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
-            item.BHObj.origin_point = '3'
+            item.BHObj.origin_point = '5'
 
         RestoreSelectedState(selRecord)
 

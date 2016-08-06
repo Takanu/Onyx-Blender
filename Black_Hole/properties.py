@@ -30,14 +30,25 @@ class BH_Object(PropertyGroup):
         ('4', 'Origin to Vertex Group', 'Sets the origin using a given vertex group'),
         ('5', 'Origin to 3D Cursor', 'Sets the origin using a given vertex group'),
         ),
-        update = Update_ObjectOrigin)
+        update = Update_ObjectOrigin
+        )
 
     update_toggle = BoolProperty(
         name = "Update Toggle",
         description = "Prevents recursion loops in specific, multi-select operations",
-        default = False)
+        default = False
+        )
 
     vertex_groups = EnumProperty(
         name="Select Vertex Group",
         items=GetVertexGroups,
-        update=Update_ObjectVGOrigin)
+        update=Update_ObjectVGOrigin
+        )
+
+class BH_Scene(PropertyGroup):
+
+    update_toggle = BoolProperty(
+        name = "Internal Update Toggle",
+        description = "Used to prevent loop recursion when updating origins from the toolshelf menu.",
+        default = False
+        )

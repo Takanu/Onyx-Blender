@@ -84,6 +84,8 @@ addon_keymaps = []
 def register():
     bpy.utils.register_module(__name__)
     bpy.types.Object.BHObj = PointerProperty(type=properties.BH_Object)
+    bpy.types.Scene.BHScn = PointerProperty(type=properties.BH_Scene)
+    bpy.context.scene.BHScn.update_toggle = False
 
     wm = bpy.context.window_manager
 
@@ -105,6 +107,7 @@ def register():
 def unregister():
     bpy.utils.unregister_module(__name__)
     del bpy.types.Object.BHObj
+    del bpy.types.Scene.BHScn
 
     wm = bpy.context.window_manager
     kc = wm.keyconfigs.addon
