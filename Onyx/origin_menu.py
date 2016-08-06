@@ -44,7 +44,7 @@ class PieOriginVGroup(Menu):
 
 class PieOriginStandard(Menu):
     bl_idname = "pie.originextra"
-    bl_label = "Mask Tools"
+    bl_label = "Onyx Origin Tools"
 
     @classmethod
     def poll(cls, context):
@@ -56,7 +56,6 @@ class PieOriginStandard(Menu):
         return has_mesh
 
     def draw(self, context):
-        print("Drawing Pie")
         layout = self.layout
         pie = layout.menu_pie()
         # 4 - LEFT

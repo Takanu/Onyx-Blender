@@ -78,8 +78,7 @@ class BlackHolePreferences(AddonPreferences):
 
         row = layout.column(align=True)
         row.label("Hey!  HEY!  OVER HERE!")
-        row.label("You can press Shift+Alt+C in Edit and Object Mode to access")
-        row.label("all of Onyx's tools.  Try it!")
+        row.label("You can press Shift+Alt+C in Edit and Object Mode to access all of Onyx's tools.  Try it!")
 
 addon_keymaps = []
 
