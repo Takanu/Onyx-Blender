@@ -1,7 +1,6 @@
 Onyx
 ==========
-
-Provides a bunch of useful origin tools for placing origins in custom locations, as well as automating the process of repositioning object origins.
+Onyx is a small Blender plugin that provides a bunch of useful origin tools for placing origins in custom locations, as well as automating the process of repositioning object origins.
 
 CURRENT FEATURES:
 ORIGIN OPTIONS
@@ -16,6 +15,10 @@ ORIGIN UPDATE BUTTON
 
 VERTEX GROUP SELECT
 - A dropdown that appears when the vertex group option is selected, allowing the user to select what vertex group they want the origin point to snap to.
+
+PIE MENU
+A pie menu has been added since R3, which can be accessed both in Edit and Object Mode with the shortcut Shift+Alt+C.  This gives you access to all the functions of Onyx without having to reach for your toolshelf.
+
 
 
 PLANNED FEATURES
