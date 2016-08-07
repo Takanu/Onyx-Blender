@@ -16,6 +16,7 @@ class OX_Update_Origin(Operator):
 
         atv = context.active_object
         sel = context.selected_objects
+        selRecord = RecordSelectedState(context)
 
         for obj in sel:
             FocusObject(obj)
@@ -24,9 +25,6 @@ class OX_Update_Origin(Operator):
         FocusObject(atv)
         SetMeshOrigin(int(atv.OXObj.origin_point), atv.name)
 
-        for obj in sel:
-            SelectObject(obj)
-
-        ActivateObject(atv)
+        RestoreSelectedState(selRecord)
 
         return {'FINISHED'}

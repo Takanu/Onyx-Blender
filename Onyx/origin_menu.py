@@ -2,7 +2,7 @@ import bpy
 from bpy.types import Menu, Operator
 
 class OX_None(Operator):
-    """Cannot continue with current pie menu."""
+    """"""
 
     bl_idname = "pie.item_none"
     bl_label = "No Vertex Groups"
